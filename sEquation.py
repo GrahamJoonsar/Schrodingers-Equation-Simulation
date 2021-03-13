@@ -1,12 +1,12 @@
 import math, pygame, time
 
 # Window Setup
-windowWidth = 500
+windowWidth = 1000
 windowHeight = 500
 leftLimit = 0
-rightLimit = 500
-globalAmplitude = 25
-globalFrequency = 15
+rightLimit = 1000
+globalAmplitude = 50
+globalFrequency = 100
 fakeTime = 0
 pygame.init()
 win = pygame.display.set_mode((windowWidth, windowHeight))
@@ -66,7 +66,7 @@ def drawPath():
 bottom = Wall(leftLimit, 480, rightLimit - leftLimit, 20, (100, 100, 100))
 left = Wall(leftLimit, 0, 20, 500, (100, 100, 100))
 right = Wall(rightLimit - 20, 0, 20, 500, (100, 100, 100))
-middleLine = Wall(0, 250, 500, 5, (60, 60, 60))
+middleLine = Wall(250, 0, 2, 500, (60, 60, 60))
 walls = [bottom, left, right]
 
 drawPath()
@@ -82,18 +82,18 @@ while running:
 
     win.fill((0, 0, 0))
 
-    #globalFrequency += math.cos(fakeTime)/30
+    globalFrequency += math.cos(fakeTime)/1.5
     #globalAmplitude += math.cos(fakeTime)/5
 
-    
-    # middleLine.draw()
+    middleLine.x = particle.x
+    middleLine.draw()
 
     hinderance = 2.5
 
-    leftLimit += math.sin(fakeTime)/hinderance
-    left.x += math.sin(fakeTime)/hinderance
-    rightLimit -= math.sin(fakeTime)/hinderance
-    right.x -= math.sin(fakeTime)/hinderance
+    # leftLimit += math.sin(fakeTime)/hinderance
+    # left.x += math.sin(fakeTime)/hinderance
+    # rightLimit -= math.sin(fakeTime)/hinderance
+    # right.x -= math.sin(fakeTime)/hinderance
 
     particle.frequency = globalFrequency
     particle.amplitude = globalAmplitude
