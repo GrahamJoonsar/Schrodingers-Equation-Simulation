@@ -1,4 +1,4 @@
-import math, pygame, time
+import math, pygame
 
 # Window Setup
 windowWidth = 1000
@@ -7,6 +7,7 @@ leftLimit = 0
 rightLimit = 1000
 globalAmplitude = 50
 globalFrequency = 100
+# This represents time
 fakeTime = 0
 pygame.init()
 win = pygame.display.set_mode((windowWidth, windowHeight))
@@ -30,6 +31,7 @@ class Particle:
         pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
 
     def move(self):
+        # Moving back anf forth
         if leftLimit + 20 < self.x < rightLimit - 20:
             self.x += self.velocity[0]
         else:
@@ -38,6 +40,7 @@ class Particle:
 
         # self.x = pygame.mouse.get_pos()[0]
         
+        # This is where the wave is generated
         self.y = math.sin(self.x/self.frequency) * self.amplitude + self.initialPosition
 
 
@@ -58,6 +61,7 @@ particle = Particle(250, 250, 10, [2, 0], 0, 1, 20, 25, (120, 60, 245))
 
 particlePath = []
 
+# Creating the path that the particle goes along
 def drawPath():
     for i in range(leftLimit + 20, rightLimit - 20, 10):
         particlePath.append(Particle(i, 250, 2, [0, 0], 0, 1, 20, 25, (100, 40, 225)))
@@ -82,19 +86,23 @@ while running:
 
     win.fill((0, 0, 0))
 
+    # Changing the Frequency and amplitude
     globalFrequency += math.cos(fakeTime)/1.5
     #globalAmplitude += math.cos(fakeTime)/5
 
+    # this is the line that goes down the middle of the particle
     middleLine.x = particle.x
     middleLine.draw()
 
     hinderance = 2.5
 
+    # this is the code that makes the walls move
     # leftLimit += math.sin(fakeTime)/hinderance
     # left.x += math.sin(fakeTime)/hinderance
     # rightLimit -= math.sin(fakeTime)/hinderance
     # right.x -= math.sin(fakeTime)/hinderance
 
+    # drawing the particle with the global frequency and amplitude.
     particle.frequency = globalFrequency
     particle.amplitude = globalAmplitude
     particle.draw()
@@ -103,6 +111,7 @@ while running:
     for wall in walls:
         wall.draw()
     
+    # Updating the particle path
     for pathParticle in particlePath:
         pathParticle.frequency = globalFrequency
         pathParticle.amplitude = globalAmplitude
@@ -111,3 +120,5 @@ while running:
         pathParticle.move()
 
     pygame.display.update()
+
+pygame.quit()
